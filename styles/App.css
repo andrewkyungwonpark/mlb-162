@@ -89,14 +89,16 @@ button {
   border-radius: 20px;
   background: rgba(245, 166, 35, 0.08);
 }
-font-size: 0.85rem;
-color: var(--chalk-dim);
-padding: 6px 12px;
-border: 1px solid var(--navy-light);
-border-radius: var(--radius-sm);
-transition:
-  color 0.15s,
-  border-color 0.15s;
+.header-reset {
+  font-size: 0.85rem;
+  color: var(--chalk-dim);
+  padding: 6px 12px;
+  border: 1px solid var(--navy-light);
+  border-radius: var(--radius-sm);
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
 .header-reset:hover {
   color: var(--chalk);
   border-color: var(--chalk-dim);
@@ -104,7 +106,7 @@ transition:
 
 .app-main {
   flex: 1;
-  max-width: 900px;
+  max-width: 680px;
   width: 100%;
   margin: 0 auto;
   padding: 2rem 1.25rem 3rem;
@@ -273,15 +275,13 @@ transition:
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  gap: 4px;
   background: var(--navy-mid);
   border: 1px solid var(--navy-light);
   border-radius: var(--radius-md);
-  padding: 0.75rem 0.85rem;
+  padding: 1rem;
+  transition: border-color 0.15s;
   text-align: left;
-  transition:
-    border-color 0.15s,
-    background 0.15s;
 }
 .mode-card:hover {
   border-color: var(--chalk-dim);
@@ -394,7 +394,6 @@ transition:
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 100%;
 }
 
 .draft-progress {
@@ -528,22 +527,9 @@ transition:
 }
 
 .player-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
-  overflow-y: scroll;
-  max-height: 500px;
-}
-
-::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 @media (max-width: 480px) {
   .player-grid {
@@ -791,21 +777,10 @@ transition:
   border-radius: var(--radius-sm);
   padding: 0.6rem 0.75rem;
   display: flex;
-  gap: 2px;
-  min-height: 60px;
-}
-
-.roster-slot-result {
-  background: var(--navy-mid);
-  border: 1px solid var(--navy-light);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem 0.75rem;
-  display: flex;
   flex-direction: column;
   gap: 2px;
   min-height: 60px;
 }
-
 .roster-slot.filled {
   border-color: rgba(245, 166, 35, 0.25);
 }
@@ -841,13 +816,13 @@ transition:
 /* ── Draft layout: 3 columns ─────────────────────────────────────────────── */
 .draft-layout {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: 220px 1fr 200px;
   gap: 1rem;
   align-items: start;
 }
 @media (max-width: 900px) {
   .draft-layout {
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 200px 1fr;
   }
   .draft-roster-col {
     display: none;
@@ -895,9 +870,8 @@ transition:
 
 .roster-card {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
+  align-items: flex-start;
+  gap: 8px;
   background: var(--navy-mid);
   border: 1px solid var(--navy-light);
   border-radius: var(--radius-sm);
@@ -905,7 +879,6 @@ transition:
   min-height: 42px;
   transition: border-color 0.15s;
 }
-
 .roster-card.filled {
   border-color: rgba(245, 166, 35, 0.3);
 }
@@ -914,7 +887,6 @@ transition:
 }
 
 .roster-card-pos {
-  flex: 0 0 40px;
   font-family: var(--font-display);
   font-size: 0.8rem;
   font-weight: 700;
@@ -925,11 +897,10 @@ transition:
 }
 
 .roster-card-info {
-  flex: 1;
-  min-width: 0;
   display: flex;
-  justify-content: space-between;
-  overflow: hidden;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
 }
 
 .roster-card-name {
@@ -1115,17 +1086,11 @@ transition:
 }
 
 .search-dropdown {
-  position: relative;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
   background: var(--navy-mid);
   border: 1px solid var(--amber);
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  z-index: 200;
-  overflow: auto;
-  margin-top: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
 }
 
 .search-result-row {
