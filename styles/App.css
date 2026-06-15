@@ -88,18 +88,18 @@ button {
   border: 1px solid var(--amber-dim);
   border-radius: 20px;
   background: rgba(245, 166, 35, 0.08);
-}
-font-size: 0.85rem;
-color: var(--chalk-dim);
-padding: 6px 12px;
-border: 1px solid var(--navy-light);
-border-radius: var(--radius-sm);
-transition:
-  color 0.15s,
-  border-color 0.15s;
-.header-reset:hover {
-  color: var(--chalk);
-  border-color: var(--chalk-dim);
+  font-size: 0.85rem;
+  color: var(--chalk-dim);
+  padding: 6px 12px;
+  border: 1px solid var(--navy-light);
+  border-radius: var(--radius-sm);
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+  .header-reset:hover {
+    color: var(--chalk);
+    border-color: var(--chalk-dim);
+  }
 }
 
 .app-main {
