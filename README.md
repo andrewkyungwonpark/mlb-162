@@ -2,15 +2,22 @@
 
 ## How to Play
 
--The user gets TWO re-rolls per session (Make them count! Or don't.)
--The user is allowed to move players to different positions while drafting as they see fit if that player has eligibility available.
+- You have **2 re-rolls per session**.
+- Players can be moved to any position for which they are eligible during the draft.
 
-# Changelog
+## Changelog
 
-# V1.1
+### v1.1
 
--Make search bar smaller
--Add filter to sort by stat
--Allow moving players to different positions if able
--Allow 1 re-roll
--Add v# on header
+#### Added
+
+- Stat sorting filter
+- Version number (`v#`) in the header
+- Added re-rolls (re-roll limit set to **2**)
+
+#### Changed
+
+- Reduced search bar size
+- Players can now be moved between eligible positions
+
+#### Updated
