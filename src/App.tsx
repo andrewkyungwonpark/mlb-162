@@ -85,7 +85,9 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <span className="header-logo">162–0</span>
+        <span className="header-logo">
+          162–0 <span className="header-version">v1.1</span>
+        </span>{" "}
         {phase !== "start" && (
           <div className="header-right">
             <span className="header-era">{eraConfig.label}</span>

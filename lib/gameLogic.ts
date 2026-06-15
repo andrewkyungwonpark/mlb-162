@@ -150,10 +150,12 @@ function recordFromScore(score: number): number {
 }
 
 function resultMessage(wins: number): string {
-  if (wins === 162) return "Perfect season. An all-time lineup for the ages.";
-  if (wins >= 150) return "A historically dominant squad — legendary.";
+  if (wins === 162)
+    return "Perfect season. An all-time lineup for the ages and living proof that you know ball.";
+  if (wins >= 150)
+    return "A historically dominant squad — legendary. So close to perfection.";
   if (wins >= 130) return "World Series contenders every single year.";
-  if (wins >= 110) return "A strong playoff team with star power.";
+  if (wins >= 100) return "A strong playoff team with star power.";
   if (wins >= 90) return "Solid squad. A playoff bubble team.";
   if (wins >= 81) return ".500 ball. A few pieces away from contention.";
   return "This roster has some gaps. Draft again for glory.";

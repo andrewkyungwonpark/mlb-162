@@ -5,6 +5,9 @@ import type { SpinResult } from "../types";
 interface Props {
   combos: SpinResult[];
   onLand: (result: SpinResult) => void;
+  onReroll?: () => void;
+  rerollsUsed?: number;
+  maxRerolls?: number;
   position: string;
   round: number;
 }
@@ -12,6 +15,9 @@ interface Props {
 export default function SlotMachine({
   combos,
   onLand,
+  onReroll,
+  rerollsUsed = 0,
+  maxRerolls = 2,
   position,
   round,
 }: Props) {
@@ -20,6 +26,8 @@ export default function SlotMachine({
   const [landed, setLanded] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  const rerollsLeft = maxRerolls - rerollsUsed;
+
   // Reset when round changes
   useEffect(() => {
     setDisplay("Press SPIN to draft");
@@ -27,13 +35,14 @@ export default function SlotMachine({
     setSpinning(false);
   }, [round]);
 
-  function spin() {
-    if (spinning || landed) return;
+  function doSpin() {
+    if (spinning) return;
     if (combos.length === 0) {
       setDisplay("No players available for this position");
       return;
     }
     setSpinning(true);
+    setLanded(false);
 
     const target = combos[Math.floor(Math.random() * combos.length)];
     let ticks = 0;
@@ -54,6 +63,12 @@ export default function SlotMachine({
     }, 75);
   }
 
+  function handleReroll() {
+    if (rerollsLeft <= 0 || spinning) return;
+    onReroll?.();
+    doSpin();
+  }
+
   return (
     <div className="slot-machine">
       <div className="slot-label">Spin for a team · pick any player</div>
@@ -62,15 +77,31 @@ export default function SlotMachine({
       >
         {display}
       </div>
-      {!landed && (
-        <button
-          className={`btn-spin ${spinning ? "disabled" : ""}`}
-          onClick={spin}
-          disabled={spinning}
-        >
-          {spinning ? "Spinning…" : "⚾ SPIN"}
+
+      {!landed && !spinning && (
+        <button className="btn-spin" onClick={doSpin}>
+          ⚾ SPIN
         </button>
       )}
+
+      {spinning && (
+        <button className="btn-spin disabled" disabled>
+          Spinning…
+        </button>
+      )}
+
+      {landed && !spinning && (
+        <div className="spin-actions">
+          <button
+            className={`btn-reroll ${rerollsLeft <= 0 ? "disabled" : ""}`}
+            onClick={handleReroll}
+            disabled={rerollsLeft <= 0}
+          >
+            🔄 Reroll {rerollsLeft > 0 ? `(${rerollsLeft} left)` : "(0 left)"}
+          </button>
+        </div>
+      )}
+
       {combos.length === 0 && !landed && (
         <p
           style={{
@@ -79,7 +110,7 @@ export default function SlotMachine({
             marginTop: "0.5rem",
           }}
         >
-          Debug: 0 combos for {position} — check players.json pos field
+          No combos available — check players.json
         </p>
       )}
     </div>

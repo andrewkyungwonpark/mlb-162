@@ -4,6 +4,7 @@ interface Props {
   roster: Roster;
   eligibleSlots: Position[];
   selectedSlot: Position | null;
+  movingFrom: Position | null;
   onSlotClick: (pos: Position) => void;
 }
 
@@ -38,6 +39,7 @@ export default function BaseballField({
   roster,
   eligibleSlots,
   selectedSlot,
+  movingFrom,
   onSlotClick,
 }: Props) {
   return (
@@ -155,14 +157,22 @@ export default function BaseballField({
           const player = roster[pos];
           const isEligible = eligibleSlots.includes(pos);
           const isSelected = selectedSlot === pos;
+          const isMoving = movingFrom === pos;
           const isFilled = !!player;
+          const isMovable = !isSelected && isFilled && movingFrom === null;
 
           let fill = "rgba(8,20,40,0.82)";
           let stroke = "rgba(255,255,255,0.20)";
           let textCol = "rgba(255,255,255,0.50)";
           let sw = 1;
 
-          if (isSelected) {
+          if (isMoving) {
+            // Selected for moving — cyan/teal highlight
+            fill = "rgba(56,189,248,0.25)";
+            stroke = "#38bdf8";
+            textCol = "#38bdf8";
+            sw = 2;
+          } else if (isSelected) {
             fill = "rgba(245,166,35,0.96)";
             stroke = "#f5a623";
             textCol = "#0a1628";
@@ -174,19 +184,26 @@ export default function BaseballField({
             sw = 1.5;
           } else if (isFilled) {
             fill = "rgba(10,22,45,0.93)";
-            stroke = "rgba(245,166,35,0.40)";
+            stroke = isMovable
+              ? "rgba(255,255,255,0.35)"
+              : "rgba(245,166,35,0.40)";
             textCol = "#f0ece0";
-            sw = 1;
+            sw = isMovable ? 1.5 : 1;
           }
 
           const w = 64;
           const h = isFilled ? 40 : 30;
+          const clickable =
+            isEligible ||
+            (isFilled && movingFrom === null) ||
+            (movingFrom !== null && !isFilled && isEligible) ||
+            isMoving;
 
           return (
             <g
               key={pos}
-              style={{ cursor: isEligible ? "pointer" : "default" }}
-              onClick={() => isEligible && onSlotClick(pos)}
+              style={{ cursor: clickable ? "pointer" : "default" }}
+              onClick={() => clickable && onSlotClick(pos)}
             >
               {isEligible && !isSelected && (
                 <rect
